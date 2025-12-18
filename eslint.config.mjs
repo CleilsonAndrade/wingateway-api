@@ -14,6 +14,8 @@ export default tseslint.config(
       'coverage',
       '.env',
       '.env.*',
+      'ecosystem.config.js',
+      'ecosystem.dev.config.js',
     ],
   },
   eslint.configs.recommended,

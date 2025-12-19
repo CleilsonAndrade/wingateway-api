@@ -23,7 +23,7 @@
     "migrate:up": "npm run typeorm:ts migration:run -- -d ./typeorm/data-source.ts",
     "migrate:down": "npm run typeorm:ts migration:revert -- -d ./typeorm/data-source.ts",
     "prepare": "husky",
-    "commit": "lint-staged && git-cz"
+    "commit": "git-cz"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

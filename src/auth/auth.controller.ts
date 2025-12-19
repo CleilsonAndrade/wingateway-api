@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { BadRequestResponse } from 'src/common/dto/bad-request.dto';
+import { BadRequestResponse } from 'src/common/dto/bad-request-response.dto';
 import { InternalServerErrorResponse } from 'src/common/dto/internal-server.dto';
 import { UnauthorizedResponse } from 'src/common/dto/unauthorized.dto';
 import { AuthService } from './auth.service';

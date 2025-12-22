@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 @Entity({
   name: 'PCFILIAL',
 })
-export class CompanyBranchEntity {
+export class CompanyBranchesEntity {
   @PrimaryColumn({
     name: 'CODIGO',
     type: 'varchar2',

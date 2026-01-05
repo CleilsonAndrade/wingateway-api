@@ -42,10 +42,35 @@ jobs:
         run: |
           echo "${{ secrets.ENV_FILE_CONTENTS }}" > .env
 
+      - name: Install production dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --production --ignore-scripts
+          else
+            npm install --production --ignore-scripts
+          fi
+
+      - name: Verify build artifacts
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "Error: dist directory not found!"
+            exit 1
+          fi
+          if [ ! -f "dist/main.js" ]; then
+            echo "Error: dist/main.js not found!"
+            exit 1
+          fi
+          echo "Build artifacts verified successfully"
+
       - name: Deploy with PM2
         run: |
           pm2 restart ecosystem.config.js --update-env || pm2 start ecosystem.config.js
           pm2 save
+
+      - name: Verify deployment
+        run: |
+          sleep 5
+          pm2 list
 
       - name: Notify deployment status
         if: always()

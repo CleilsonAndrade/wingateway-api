@@ -9,19 +9,27 @@ on:
 
 jobs:
   reset-commit:
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Fetch commit
-        run: git fetch origin ${{ github.event.inputs.commit_hash }}
-
-      - name: Update the branch
-        run: git pull
-
-      - name: Reset Commit
+      - name: Configure Git
         run: |
-          git reset ${{ github.event.inputs.commit_hash }}
-          git push --force origin ${{ github.ref }}
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Fetch all branches
+        run: git fetch --all
+
+      - name: Reset to commit
+        run: |
+          git reset --hard ${{ github.event.inputs.commit_hash }}
+
+      - name: Force push
+        run: |
+          git push --force origin HEAD:${{ github.ref_name }}
